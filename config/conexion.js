@@ -1,6 +1,6 @@
 //--- Conexion a al BD MySQL
 //se carga el paquete o llama a la dependencia​
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const conexion = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
