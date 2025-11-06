@@ -1,4 +1,3 @@
-
 //--- Rutas de acceso a nuestra API y sus métdos CRUD
 const route = require("express").Router();
 
@@ -11,6 +10,7 @@ const recomendaciones = require("../controller/recomendaciones");
 const registros_productivos = require("../controller/registros_productividad");
 const publicaciones = require("../controller/publicaciones");
 const respuestas = require("../controller/respuestas");
+const login = require("../controller/login");
 
 // Mantén la base en "/"
 route.use("/", usuarios);
@@ -21,5 +21,6 @@ route.use("/", recomendaciones);
 route.use("/", registros_productivos);
 route.use("/", publicaciones);
 route.use("/", respuestas);
+route.use("/", login);
 
 module.exports = route;
