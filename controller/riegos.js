@@ -1,7 +1,7 @@
-const conexion = require('../config/conexion');
+const conexion = require("../config/conexion");
 const express = require("express");
 const ruta = express();
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 ruta.use(bodyParser.json());
 
 // Obtener todos los riegos activos de un cultivo
@@ -13,7 +13,7 @@ ruta.get("/riegos/cultivos/:id_cultivo", (req, res) => {
     FROM riegos 
     WHERE id_cultivo = ? 
       AND EstLogico = 1 
-    ORDER BY id_riegos DESC
+    ORDER BY id_riego DESC
   `;
 
   conexion.query(sql, [id_cultivo], (err, rows) => {
