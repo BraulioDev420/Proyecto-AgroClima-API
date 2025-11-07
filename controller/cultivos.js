@@ -1,7 +1,7 @@
-const conexion = require("../config/conexion");
+const conexion = require('../config/conexion');
 const express = require("express");
 const ruta = express();
-const bodyParser = require("body-parser");
+const bodyParser = require('body-parser');
 ruta.use(bodyParser.json());
 
 // Obtener todos los cultivos activos de un usuario
