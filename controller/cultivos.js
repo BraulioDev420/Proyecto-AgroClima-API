@@ -4,40 +4,51 @@ const ruta = express();
 const bodyParser = require("body-parser");
 ruta.use(bodyParser.json());
 
-// Obtener todos los cultivos activos de un usuari
+// Obtener todos los cultivos activos de un usuario
 // http://localhost:3300/cultivos/usuario/16
-ruta.get("/riegos/cultivos/:id_cultivo", (req, res) => {
-  const id_cultivo = req.params.id_cultivo;
+ruta.get("/cultivos/usuario/:id_usuario", (req, res) => {
+  const id_usuario = req.params.id_usuario;
   const sql = `
     SELECT * 
-    FROM riegos 
-    WHERE id_cultivo = ? 
+    FROM cultivos 
+    WHERE id_usuario = ? 
       AND EstLogico = 1 
-    ORDER BY id_riego DESC
+    ORDER BY id_cultivo DESC
   `;
 
-  conexion.query(sql, [id_cultivo], (err, rows) => {
+  conexion.query(sql, [id_usuario], (err, rows) => {
     if (err) {
-      console.error("Error al obtener riegos del cultivo:", err);
+      console.error("Error al obtener cultivos del usuario:", err);
       return res.status(500).json({
-        mensaje: "Error al obtener riegos del cultivo",
+        mensaje: "Error al obtener cultivos del usuario",
         codigo: "-1",
       });
     }
 
     if (rows.length === 0) {
       return res.json({
-        mensaje: "No se encontraron riegos para este cultivo",
+        mensaje: "No se encontraron cultivos activos para este usuario",
         codigo: "0",
         data: [],
       });
     }
 
     res.json({
-      mensaje: "Riegos del cultivo encontrados",
+      mensaje: "Cultivos activos encontrados",
       codigo: "OK",
       data: rows,
     });
+  });
+});
+
+// Obtener todos los cultivos activos
+// http://localhost:3300/cultivos/activos/
+ruta.get("/cultivos/activos/", (req, res) => {
+  let sql =
+    "SELECT * FROM cultivos WHERE EstLogico = 1 ORDER BY id_cultivo DESC";
+  conexion.query(sql, (err, rows) => {
+    if (err) throw err;
+    res.json(rows);
   });
 });
 
