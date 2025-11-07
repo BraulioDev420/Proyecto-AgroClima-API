@@ -4,7 +4,7 @@ const ruta = express();
 const bodyParser = require("body-parser");
 ruta.use(bodyParser.json());
 
-// Obtener todos los cultivos activos de un usuario
+// Obtener todos los cultivos activos de un usuari
 // http://localhost:3300/cultivos/usuario/16
 ruta.get("/riegos/cultivos/:id_cultivo", (req, res) => {
   const id_cultivo = req.params.id_cultivo;
