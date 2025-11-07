@@ -1,24 +1,36 @@
+// Cargar variables de entorno (.env)
 require('dotenv').config();
-//const conexion = require('./config/conexion');
+
+// Importar dependencias
 const express = require("express");
+const cors = require("cors");
 const app = express();
-//const conexion = require("./config/conexion");
-//nos ayuda a analizar el cuerpo de la solicitud POST​
-app.use(express.json());//para recibir en fortmato json
-app.use(express.urlencoded({extended: true}));//?
-//-- para dar accesos desde cualquier servidor​
-app.use(function (req, res, next) {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-	res.setHeader("Access-Control-Allow-Credentials", "true");
-	res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,DELETE");
-	res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
-    next();
-  });
-//cargamos el archivo del controlador​
-//const conexion = require("./controller/propietarioController");
-app.use(require('./routes/rutas'));
-app.listen(process.env.PORT||3300,() => {
-    console.log("Servidor corriendo en el puerto 3300");
-    console.log("Ejecute el navegador en la siguiente diección, http://localhost:3300/");
+
+// Middleware para procesar JSON y formularios
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Habilitar CORS (permite conectar con Angular o cualquier frontend)
+app.use(cors({
+  origin: '*', // Puedes reemplazar '*' por la URL del frontend en producción
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+// Importar rutas
+const rutas = require('./routes/rutas');
+
+// Usar rutas en la app
+app.use('/', rutas);
+
+// Puerto dinámico (Render usa process.env.PORT automáticamente)
+const PORT = process.env.PORT || 3300;
+
+// Iniciar servidor
+app.listen(PORT, () => {
+  console.log(`✅ Servidor corriendo en el puerto ${PORT}`);
+  console.log(`🌐 Disponible en: http://localhost:${PORT}/`);
 });
+
+// Exportar app (útil para testing o integración)
 module.exports = app;
