@@ -4,6 +4,21 @@ const ruta = express();
 const bodyParser = require('body-parser');
 ruta.use(bodyParser.json());
 
+//  Obtener publicaciones de un usuario
+// http://localhost:3300/publicaciones/usuario/5
+ruta.get("/publicaciones/usuario/:id_usuario", (req, res) => {
+  const { id_usuario } = req.params;
+  const sql = `
+    SELECT * FROM publicaciones 
+    WHERE id_usuario = ? AND EstLogico = 1
+    ORDER BY fecha_publicacion DESC
+  `;
+  conexion.query(sql, [id_usuario], (err, resultado) => {
+    if (err) return res.status(500).json({ error: err });
+    res.json(resultado);
+  });
+});
+
 //obtener todas las publicaciones activas
 // http://localhost:3300/publicaciones/activas/
 ruta.get('/publicaciones/activas/', (req, res) => {
