@@ -5,7 +5,7 @@ const pool = mysql.createPool({
   host: process.env.DB_HOST || 'maglev.proxy.rlwy.net',
   user: process.env.DB_USER || 'root',
   password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME || 'railway',
+  database: process.env.DB_NAME || 'agroclima13',
   port: process.env.DB_PORT || 10898, // usa el puerto público de Railway
   waitForConnections: true,
   connectionLimit: 10,   // número máximo de conexiones simultáneas
